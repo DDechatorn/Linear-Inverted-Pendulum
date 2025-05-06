@@ -1,0 +1,96 @@
+import utime
+import machine
+import _thread
+from machine import Pin
+
+# GPIO Setup 
+ENCODER_A_PIN = 6
+ENCODER_B_PIN = 7
+STEPPER_STEP_PIN = 10
+STEPPER_DIR_PIN = 11
+
+# Stepper Motor Pins 
+step_pin = Pin(STEPPER_STEP_PIN, Pin.OUT)
+dir_pin = Pin(STEPPER_DIR_PIN, Pin.OUT)
+
+# PID Parameters
+Kp = 1.2
+Ki = 0.02
+Kd = 0.05
+
+setpoint = 0.0
+integral = 0.0
+prev_error = 0.0
+encoder_count = 0
+current_control_signal = 0
+lock = _thread.allocate_lock()
+
+# Encoder Setup
+encoder_b = Pin(ENCODER_B_PIN, Pin.IN, Pin.PULL_UP)
+def encoder_isr(pin):
+    global encoder_count
+    b_state = encoder_b.value()
+    if b_state:
+        encoder_count += 1
+    else:
+        encoder_count -= 1
+
+encoder_a = Pin(ENCODER_A_PIN, Pin.IN, Pin.PULL_UP)
+encoder_a.irq(trigger=Pin.IRQ_RISING, handler=encoder_isr)
+
+# PID Thread
+def pid_thread():
+    global integral, prev_error, encoder_count, current_control_signal
+    while True:
+        lock.acquire()
+        position = encoder_count
+        lock.release()
+
+        error = setpoint - position
+        integral += error
+        derivative = error - prev_error
+        prev_error = error
+
+        control = Kp * error + Ki * integral + Kd * derivative
+        control = max(min(control, 100), -100)  # clamp output
+        current_control_signal = control
+
+        utime.sleep_ms(10)
+
+# Stepper Motor Control Thread 
+def stepper_thread():
+    global current_control_signal
+    while True:
+        control = current_control_signal
+
+        if abs(control) < 1:
+            utime.sleep_ms(10)
+            continue
+
+        dir_pin.value(1 if control > 0 else 0)
+
+        speed = min(max(abs(control), 1), 100)
+        delay = int(100 - speed) + 1  # between 1 and 100 ms
+
+        step_pin.value(1)
+        utime.sleep_us(500)
+        step_pin.value(0)
+        utime.sleep_us(500)
+
+        utime.sleep_ms(delay)
+
+# === Monitoring Thread ===
+def monitor_thread():
+    while True:
+        lock.acquire()
+        print("Encoder:", encoder_count, "Setpoint:", setpoint, "Control:", current_control_signal)
+        lock.release()
+        utime.sleep_ms(200)
+
+# === Start Threads ===
+_thread.start_new_thread(pid_thread, ())
+_thread.start_new_thread(stepper_thread, ())
+_thread.start_new_thread(monitor_thread, ())
+
+while True:
+    utime.sleep(1)
