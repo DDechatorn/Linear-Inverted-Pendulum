@@ -40,7 +40,8 @@ The primary objectives of this project are:
 * **Power Supply**: 24V DC regulated power for all components.
 * **Microcontroller**: Raspberry Pi Pico used for control implementation.
 
-![Wiring Diagram](Pictures/Wiring Diagram.png)
+![Wiring Diagram](https://github.com/user-attachments/assets/5fcde406-794c-494b-8254-54376ac1ca3b)
+
 ---
 
 ## **4. Software and Libraries**
@@ -120,7 +121,7 @@ A Kalman Filter was designed for state estimation in the presence of noise. The 
 * **Cart and Bearings**: Precision bearings and shafts for smooth motion.
 * **Encoder and Limit Switch Mounts**: Designed with generative design techniques and 3D-printed using ABS plastic to reduce mass and stiffness.
 
-![Linear Inverted Pendulum Design](Pictures/Linear Inverted Pendulum Design.png)
+![Linear Inverted Pendulum Design](https://github.com/user-attachments/assets/3ffbc9cb-f1e5-452e-aff9-dff1cc838d44)
 
 ---
 
