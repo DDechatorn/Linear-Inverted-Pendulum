@@ -139,11 +139,3 @@ A Kalman Filter was designed for state estimation in the presence of noise. The 
 * **Kalman Filter Implementation**: Final implementation and tuning of Q and R matrices in MicroPython is planned.
 
 ---
-
-## **11. Conclusion**
-
-This project successfully developed a linear inverted pendulum system capable of supporting multiple control strategies. The system was modeled, simulated, and partially implemented with physical components. The work demonstrates fundamental and advanced concepts in mechatronics, control theory, and embedded system design. Future steps include finalizing estimator integration and improving mechanical robustness.
-
----
-
-Would you like this report exported as a Word document or PDF?
