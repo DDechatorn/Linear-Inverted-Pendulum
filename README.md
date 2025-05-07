@@ -2,9 +2,13 @@
 
 **Author**: Dechatorn Devaphalin
 
+https://github.com/user-attachments/assets/08d543b7-4ed3-489c-9ccb-a066a422a17f
+
 ## **1. Introduction**
 
 The inverted pendulum system is inherently unstable and has long been utilized as a benchmark problem in control systems engineering. This project aims to design and construct a one-degree-of-freedom (1-DOF) linear inverted pendulum system. The focus is on developing a physical model equipped with a dynamic mass pendulum and implementing multiple control strategies for system stabilization and evaluation.
+
+![IMG_3692](https://github.com/user-attachments/assets/6bcbddf7-01ad-4618-a9e1-57dd6c457ae6)
 
 ---
 
@@ -33,14 +37,14 @@ The primary objectives of this project are:
 
 ### 3.2 Electrical Components
 
-* **Stepper Motor (NEMA 23)**: Drives the cart horizontally.
+* **Stepper Motor (NEMA 17)**: Drives the cart horizontally.
 * **Stepper Driver**: Converts control pulses into motor movement.
 * **Rotary Encoder (600 pulses/rev)**: Measures position and speed.
 * **Limit Switches**: Prevent over-travel by detecting mechanical limits.
 * **Power Supply**: 24V DC regulated power for all components.
 * **Microcontroller**: Raspberry Pi Pico used for control implementation.
 
-![Wiring Diagram](https://github.com/user-attachments/assets/5fcde406-794c-494b-8254-54376ac1ca3b)
+![494831152_1056459313011459_1973165981225797840_n](https://github.com/user-attachments/assets/a94e53ee-e341-46a6-a003-8a03af6d1d98)
 
 ---
 
@@ -129,13 +133,5 @@ A Kalman Filter was designed for state estimation in the presence of noise. The 
 
 * **Swing-Up Simulation**: Verified using MATLAB and Python to achieve pendulum stabilization from rest.
 * **ANSYS Motion Analysis**: Conducted for mechanical validation of design stresses, displacements, and motion behavior.
-
----
-
-## **10. Implementation Challenges and Future Work**
-
-* **Vibration and Balancing**: The system experienced excessive vibration during motion, which affected stability.
-* **Aesthetic and Hardware Layout**: Future improvements will include better cable management and cleaner physical layout.
-* **Kalman Filter Implementation**: Final implementation and tuning of Q and R matrices in MicroPython is planned.
 
 ---
